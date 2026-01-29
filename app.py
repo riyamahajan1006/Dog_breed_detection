@@ -1,4 +1,3 @@
-# -------------------- IMPORTS --------------------
 from flask import Flask, render_template, request
 from werkzeug.utils import secure_filename
 import os
@@ -6,10 +5,8 @@ import numpy as np
 import tensorflow as tf
 from tensorflow.keras.preprocessing import image
 
-# -------------------- APP SETUP --------------------
 app = Flask(__name__)
 
-# -------------------- LOAD MODEL --------------------
 MODEL_PATH = "models/dog_breed_inceptionv3.keras"
 model = tf.keras.models.load_model(MODEL_PATH)
 
@@ -29,7 +26,6 @@ def predict_image(img):
 
     return class_labels[idx], confidence
 
-# -------------------- ROUTES --------------------
 @app.route('/', methods=['GET', 'POST'])
 def home():
     if request.method == 'POST':
@@ -58,10 +54,8 @@ def home():
 
     return render_template("index.html")
 
-# -------------------- HELPERS --------------------
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in {'jpg', 'jpeg', 'png'}
 
-# -------------------- RUN --------------------
 if __name__ == "__main__":
     app.run(debug=True)
